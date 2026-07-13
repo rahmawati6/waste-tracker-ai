@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Pengguna - SmartWaste AI{% endblock %}
+{% block page_title %}Pengguna{% endblock %}
+{% block page_subtitle %}Kelola akun admin dan petugas operasional.{% endblock %}
+
+{% block content %}
+<section class="panel mb-4">
+    <div class="panel-heading"><h2>Tambah Pengguna</h2></div>
+    <form method="post" class="form-grid">
+        <input class="form-control" name="nama" placeholder="Nama" required>
+        <input class="form-control" name="email" type="email" placeholder="Email" required>
+        <input class="form-control" name="password" type="password" placeholder="Password" required>
+        <select class="form-select" name="role" required>
+            <option value="admin">admin</option>
+            <option value="petugas">petugas</option>
+        </select>
+        <button class="btn btn-success" type="submit"><i class="bi bi-person-plus"></i> Tambah</button>
+    </form>
+</section>
+
+<section class="panel">
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Dibuat</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.nama }}</td>
+                        <td>{{ user.email }}</td>
+                        <td><span class="badge text-bg-success">{{ user.role }}</span></td>
+                        <td>{{ user.created_at.strftime('%d %b %Y') }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('pengguna.hapus_pengguna', user_id=user.id) }}">
+                                <button class="btn btn-sm btn-outline-danger" type="submit" {% if user.id == current_user.id %}disabled{% endif %}><i class="bi bi-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

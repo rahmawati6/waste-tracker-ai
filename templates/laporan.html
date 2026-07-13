@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Laporan - SmartWaste AI{% endblock %}
+{% block page_title %}Laporan{% endblock %}
+{% block page_subtitle %}Rekap sampah dan pengambilan harian.{% endblock %}
+
+{% block content %}
+<section class="panel mb-4">
+    <form method="get" class="filter-bar">
+        <input class="form-control" type="date" name="start" value="{{ start_date or '' }}">
+        <input class="form-control" type="date" name="end" value="{{ end_date or '' }}">
+        <button class="btn btn-success" type="submit"><i class="bi bi-funnel"></i> Filter</button>
+        <button class="btn btn-outline-secondary" type="button" onclick="window.print()"><i class="bi bi-printer"></i> Cetak</button>
+        <a class="btn btn-outline-success" href="{{ url_for('laporan.export_laporan') }}"><i class="bi bi-filetype-csv"></i> CSV</a>
+    </form>
+</section>
+
+<section class="panel">
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Total Sampah</th>
+                    <th>Jumlah Pengambilan</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                    <tr>
+                        <td>{{ report.tanggal.strftime('%d %b %Y') }}</td>
+                        <td>{{ report.total_sampah }} kg</td>
+                        <td>{{ report.jumlah_pengambilan }}</td>
+                        <td>{{ report.keterangan }}</td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="4" class="text-center text-muted">Tidak ada data laporan.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

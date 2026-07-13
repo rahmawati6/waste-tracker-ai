@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Peta & Rute - SmartWaste AI{% endblock %}
+{% block page_title %}Peta &amp; Rute{% endblock %}
+{% block page_subtitle %}Sebaran lokasi tempat sampah pintar berdasarkan status kapasitas.{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Peta Monitoring</h2>
+        <span class="badge text-bg-success">{{ bins|length }} titik</span>
+    </div>
+    <div id="routeMap" class="map-page"></div>
+</section>
+<script id="map-bins" type="application/json">{{ bins|tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+{% endblock %}

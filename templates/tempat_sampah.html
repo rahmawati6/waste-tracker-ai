@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Tempat Sampah - SmartWaste AI{% endblock %}
+{% block page_title %}Tempat Sampah{% endblock %}
+{% block page_subtitle %}Inventaris bin pintar dan kapasitas terbarunya.{% endblock %}
+
+{% block content %}
+{% if current_user.role == 'admin' %}
+<section class="panel mb-4">
+    <div class="panel-heading"><h2>{{ 'Edit Tempat Sampah' if item else 'Tambah Tempat Sampah' }}</h2></div>
+    <form method="post" class="form-grid">
+        <input class="form-control" name="kode_bin" placeholder="Kode bin" value="{{ item.kode_bin if item else '' }}" required>
+        <input class="form-control" name="nama_lokasi" placeholder="Nama lokasi" value="{{ item.nama_lokasi if item else '' }}" required>
+        <input class="form-control wide" name="alamat" placeholder="Alamat" value="{{ item.alamat if item else '' }}" required>
+        <input class="form-control" name="latitude" type="number" step="any" placeholder="Latitude" value="{{ item.latitude if item else '' }}" required>
+        <input class="form-control" name="longitude" type="number" step="any" placeholder="Longitude" value="{{ item.longitude if item else '' }}" required>
+        <input class="form-control" name="kapasitas" type="number" step="any" placeholder="Kapasitas kg" value="{{ item.kapasitas if item else '' }}" required>
+        <select class="form-select" name="status" required>
+            {% for status in ['kosong', 'sedang', 'hampir penuh', 'penuh'] %}
+                <option value="{{ status }}" {% if item and item.status == status %}selected{% endif %}>{{ status }}</option>
+            {% endfor %}
+        </select>
+        <input class="form-control" name="persentase_isi" type="number" min="0" max="100" placeholder="Persentase isi" value="{{ item.persentase_isi if item else '' }}" required>
+        <button class="btn btn-success" type="submit"><i class="bi bi-save"></i> Simpan</button>
+    </form>
+</section>
+{% endif %}
+
+<section class="panel">
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Kode</th>
+                    <th>Lokasi</th>
+                    <th>Alamat</th>
+                    <th>Kapasitas</th>
+                    <th>Status</th>
+                    <th>Isi</th>
+                    {% if current_user.role == 'admin' %}<th>Aksi</th>{% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for bin in bins %}
+                    <tr>
+                        <td><strong>{{ bin.kode_bin }}</strong></td>
+                        <td>{{ bin.nama_lokasi }}</td>
+                        <td>{{ bin.alamat }}</td>
+                        <td>{{ bin.kapasitas }} kg</td>
+                        <td><span class="badge bin-{{ bin.status|replace(' ', '-') }}">{{ bin.status }}</span></td>
+                        <td>{{ bin.persentase_isi }}%</td>
+                        {% if current_user.role == 'admin' %}
+                            <td class="action-cell">
+                                <a class="btn btn-sm btn-outline-success" href="{{ url_for('sampah.edit_tempat_sampah', item_id=bin.id) }}"><i class="bi bi-pencil"></i></a>
+                                <form method="post" action="{{ url_for('sampah.hapus_tempat_sampah', item_id=bin.id) }}">
+                                    <button class="btn btn-sm btn-outline-danger" type="submit"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Pengumpulan - SmartWaste AI{% endblock %}
+{% block page_title %}Pengumpulan{% endblock %}
+{% block page_subtitle %}Jadwal operasional pengangkutan sampah.{% endblock %}
+
+{% block content %}
+<section class="panel mb-4">
+    <div class="panel-heading"><h2>Tambah Jadwal</h2></div>
+    <form method="post" class="form-grid">
+        <select class="form-select" name="tempat_sampah_id" required>
+            {% for bin in bins %}
+                <option value="{{ bin.id }}">{{ bin.kode_bin }} - {{ bin.nama_lokasi }}</option>
+            {% endfor %}
+        </select>
+        <input class="form-control" name="nama_petugas" placeholder="Nama petugas" value="{{ current_user.nama if current_user.role == 'petugas' else '' }}" required>
+        <input class="form-control" name="tanggal" type="date" required>
+        <input class="form-control" name="jam" type="time" required>
+        <select class="form-select" name="status">
+            <option value="terjadwal">terjadwal</option>
+            <option value="diproses">diproses</option>
+            <option value="selesai">selesai</option>
+        </select>
+        <button class="btn btn-success" type="submit"><i class="bi bi-calendar-plus"></i> Tambah</button>
+    </form>
+</section>
+
+<section class="panel">
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Tempat Sampah</th>
+                    <th>Petugas</th>
+                    <th>Tanggal</th>
+                    <th>Jam</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for schedule in schedules %}
+                    <tr>
+                        <td>{{ schedule.tempat_sampah.kode_bin }} - {{ schedule.tempat_sampah.nama_lokasi }}</td>
+                        <td>{{ schedule.nama_petugas }}</td>
+                        <td>{{ schedule.tanggal.strftime('%d %b %Y') }}</td>
+                        <td>{{ schedule.jam.strftime('%H:%M') }}</td>
+                        <td><span class="badge status-{{ schedule.status }}">{{ schedule.status }}</span></td>
+                        <td class="action-cell">
+                            <form method="post" action="{{ url_for('pengumpulan.ubah_status_pengumpulan', schedule_id=schedule.id) }}" class="inline-form">
+                                <select class="form-select form-select-sm" name="status">
+                                    {% for status in ['terjadwal', 'diproses', 'selesai'] %}
+                                        <option value="{{ status }}" {% if schedule.status == status %}selected{% endif %}>{{ status }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn btn-sm btn-outline-success" type="submit"><i class="bi bi-check2"></i></button>
+                            </form>
+                            {% if current_user.role == 'admin' %}
+                                <form method="post" action="{{ url_for('pengumpulan.hapus_pengumpulan', schedule_id=schedule.id) }}">
+                                    <button class="btn btn-sm btn-outline-danger" type="submit"><i class="bi bi-trash"></i></button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

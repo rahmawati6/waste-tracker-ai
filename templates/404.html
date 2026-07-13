@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}404 - SmartWaste AI{% endblock %}
+{% block page_title %}Halaman Tidak Ditemukan{% endblock %}
+{% block page_subtitle %}Alamat yang dibuka tidak tersedia.{% endblock %}
+
+{% block content %}
+<section class="empty-state premium-error" data-aos="fade-up">
+    <span class="error-code">404</span>
+    <i class="bi bi-compass"></i>
+    <h2>Halaman tidak ditemukan.</h2>
+    <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-success">Kembali ke Dashboard</a>
+</section>
+{% endblock %}

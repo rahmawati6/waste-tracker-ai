@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Monitoring Sampah - SmartWaste AI{% endblock %}
+{% block page_title %}Monitoring Sampah{% endblock %}
+{% block page_subtitle %}Kondisi sensor dan kapasitas tempat sampah pintar.{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Kode</th>
+                    <th>Lokasi</th>
+                    <th>Isi</th>
+                    <th>Berat</th>
+                    <th>Suhu</th>
+                    <th>Kelembaban</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in bins %}
+                    {% set sensor = item.latest_sensor %}
+                    <tr>
+                        <td><strong>{{ item.kode_bin }}</strong></td>
+                        <td>{{ item.nama_lokasi }}</td>
+                        <td>
+                            <div class="progress slim-progress">
+                                <div class="progress-bar fill-{{ item.status|replace(' ', '-') }}" style="width: {{ item.persentase_isi }}%"></div>
+                            </div>
+                            <small>{{ item.persentase_isi }}%</small>
+                        </td>
+                        <td>{{ sensor.berat_sampah if sensor else 0 }} kg</td>
+                        <td>{{ sensor.suhu if sensor else '-' }} C</td>
+                        <td>{{ sensor.kelembaban if sensor else '-' }}%</td>
+                        <td><span class="badge bin-{{ item.status|replace(' ', '-') }}">{{ item.status }}</span></td>
+                        <td>{{ sensor.waktu.strftime('%d %b %Y %H:%M') if sensor else '-' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

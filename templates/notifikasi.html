@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Notifikasi - SmartWaste AI{% endblock %}
+{% block page_title %}Notifikasi{% endblock %}
+{% block page_subtitle %}Informasi prioritas operasional terbaru.{% endblock %}
+
+{% block content %}
+<section class="notification-list">
+    {% for item in notifications %}
+        <article class="notification-card {% if not item.sudah_dibaca %}unread{% endif %}">
+            <span class="notif-dot notif-{{ item.tipe }}"></span>
+            <div>
+                <h2>{{ item.judul }}</h2>
+                <p>{{ item.pesan }}</p>
+                <small>{{ item.created_at.strftime('%d %b %Y %H:%M') }} - {{ item.tipe }}</small>
+            </div>
+            {% if not item.sudah_dibaca %}
+                <form method="post" action="{{ url_for('notifikasi.tandai_dibaca', notification_id=item.id) }}">
+                    <button class="btn btn-sm btn-outline-success" type="submit"><i class="bi bi-check2"></i></button>
+                </form>
+            {% endif %}
+        </article>
+    {% else %}
+        <section class="empty-state"><i class="bi bi-bell"></i><h2>Belum ada notifikasi.</h2></section>
+    {% endfor %}
+</section>
+{% endblock %}

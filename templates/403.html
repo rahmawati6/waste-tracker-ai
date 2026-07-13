@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}403 - SmartWaste AI{% endblock %}
+{% block page_title %}Akses Ditolak{% endblock %}
+{% block page_subtitle %}Hak akses akun tidak mencukupi.{% endblock %}
+
+{% block content %}
+<section class="empty-state premium-error" data-aos="fade-up">
+    <span class="error-code">403</span>
+    <i class="bi bi-shield-lock"></i>
+    <h2>Anda tidak memiliki akses ke halaman ini.</h2>
+    <p>Silakan kembali ke dashboard atau hubungi admin sistem.</p>
+    <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-success">Kembali ke Dashboard</a>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Pengaturan - SmartWaste AI{% endblock %}
+{% block page_title %}Pengaturan Sistem{% endblock %}
+{% block page_subtitle %}Konfigurasi penting hanya untuk admin.{% endblock %}
+
+{% block content %}
+<section class="settings-grid">
+    <article class="panel">
+        <div class="panel-heading"><h2>Database</h2></div>
+        <p class="muted">Koneksi default memakai MySQL database <strong>smartwaste_ai</strong>.</p>
+        <span class="badge text-bg-success">Aktif</span>
+    </article>
+    <article class="panel">
+        <div class="panel-heading"><h2>AI Fallback</h2></div>
+        <p class="muted">Jika model Keras belum tersedia, aplikasi memakai prediksi fallback agar tetap berjalan.</p>
+        <span class="badge text-bg-warning">Fallback siap</span>
+    </article>
+    <article class="panel">
+        <div class="panel-heading"><h2>Keamanan</h2></div>
+        <p class="muted">Session pengguna dikelola Flask Login dan password disimpan memakai hash Werkzeug.</p>
+        <span class="badge text-bg-success">Terlindungi</span>
+    </article>
+</section>
+{% endblock %}
