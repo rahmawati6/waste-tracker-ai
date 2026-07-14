@@ -1,67 +1,100 @@
-# SmartWaste AI Smart City
+<p align="center">
+  <img src="static/img/logo-smartwaste.png" alt="SmartWaste AI Logo" width="140">
+</p>
 
-SmartWaste AI Smart City adalah aplikasi web Flask untuk memantau tempat sampah pintar, jadwal pengumpulan, notifikasi operasional, peta rute, laporan, dan analisis AI sederhana.
+<h1 align="center">SmartWaste AI Smart City</h1>
 
-## Fitur
+<p align="center">
+  Aplikasi web berbasis Flask untuk monitoring tempat sampah pintar, pengelolaan jadwal pengangkutan, notifikasi operasional, laporan, peta rute, dan analisis AI.
+</p>
 
-- Login email dan password dengan Flask Login.
-- Password hash memakai `werkzeug.security`.
-- Role `admin` dan `petugas`.
-- Admin bisa mengakses semua halaman.
-- Petugas hanya bisa membuka Dashboard, Monitoring Sampah, Tempat Sampah, Pengumpulan, Peta & Rute, Notifikasi, dan Logout.
-- Halaman 403 untuk akses terlarang.
-- Dashboard dengan statistik, chart, peta Leaflet, jadwal, dan notifikasi.
-- CRUD tempat sampah untuk admin.
-- Jadwal pengumpulan dan perubahan status.
+<p align="center">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white">
+  <img alt="Flask" src="https://img.shields.io/badge/Flask-3.x-000000?style=for-the-badge&logo=flask&logoColor=white">
+  <img alt="MySQL" src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+  <img alt="License MIT" src="https://img.shields.io/badge/License-MIT-2E7D32?style=for-the-badge">
+</p>
+
+## Preview Aplikasi
+
+![SmartWaste AI Application Preview](docs/screenshot-login.png)
+
+## Tentang Proyek
+
+SmartWaste AI Smart City dirancang sebagai dashboard operasional untuk membantu pemantauan sampah kota secara lebih cepat, terukur, dan mudah dianalisis. Sistem ini menggabungkan data tempat sampah, jadwal pengumpulan, status kapasitas, notifikasi, laporan, serta modul AI sederhana untuk mendukung pengambilan keputusan.
+
+## Fitur Utama
+
+- Autentikasi login menggunakan email dan password.
+- Manajemen role `admin` dan `petugas`.
+- Dashboard monitoring dengan ringkasan statistik, grafik, peta, jadwal, dan notifikasi.
+- CRUD data tempat sampah untuk administrator.
+- Pengelolaan jadwal pengumpulan dan perubahan status.
+- Peta dan rute monitoring berbasis Leaflet.
 - Analisis AI dengan upload gambar dan fallback prediksi.
 - Laporan dengan filter, cetak, dan export CSV.
-- CRUD pengguna untuk admin.
+- Manajemen pengguna untuk administrator.
+- Halaman error `403`, `404`, dan `500` yang konsisten dengan tampilan aplikasi.
 
 ## Teknologi
 
-- Python, Flask, Flask SQLAlchemy, Flask Login
-- MySQL dan PyMySQL
-- Bootstrap, Chart.js, Leaflet.js
-- TensorFlow/Keras-ready, NumPy, Pillow, OpenCV
+- **Backend:** Python, Flask, Flask-SQLAlchemy, Flask-Login
+- **Database:** MySQL, PyMySQL
+- **Frontend:** HTML, CSS, Bootstrap, Bootstrap Icons
+- **Visualisasi:** Chart.js, ApexCharts, Leaflet.js
+- **AI-ready:** TensorFlow/Keras, NumPy, Pillow, OpenCV
+
+## Struktur Proyek
+
+```text
+SmartWaste_AI/
+├── ai/                         # Modul preprocessing, training, dan prediksi AI
+├── database/                   # File SQL database awal
+├── docs/                       # Aset dokumentasi README
+├── models/                     # Model database dan placeholder model AI
+├── routes/                     # Blueprint Flask
+├── static/                     # CSS, JavaScript, logo, dan gambar
+├── templates/                  # Template halaman aplikasi
+├── app.py                      # Entry point aplikasi Flask
+├── config.py                   # Konfigurasi aplikasi
+├── extensions.py               # Inisialisasi ekstensi Flask
+├── requirements.txt            # Dependency utama
+├── requirements-ai-py310.txt   # Dependency opsional TensorFlow untuk Python 3.10
+└── requirements-vision.txt     # Dependency opsional pemrosesan gambar
+```
 
 ## Instalasi
 
 Gunakan Python 3.10 atau Python 3.13.
 
-- Python 3.10: bisa memakai dependency utama dan optional TensorFlow.
-- Python 3.13: gunakan dependency utama. Analisis AI tetap berjalan memakai fallback karena TensorFlow versi lama tidak mendukung Python 3.13.
-
-1. Masuk ke folder aplikasi:
-
 ```bash
 cd C:\laragon\www\SmartWaste_AI
-```
-
-2. Install dependency:
-
-```bash
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Jika memakai Python 3.10 dan ingin memasang TensorFlow/Keras:
+Jika menggunakan Python 3.10 dan ingin mengaktifkan dukungan TensorFlow/Keras:
 
 ```bash
 pip install -r requirements-ai-py310.txt
 ```
 
-Jika hanya ingin library gambar tanpa TensorFlow:
+Jika hanya membutuhkan library pengolahan gambar tanpa TensorFlow:
 
 ```bash
 pip install -r requirements-vision.txt
 ```
 
-3. Buat database MySQL melalui phpMyAdmin atau terminal, lalu import:
+## Konfigurasi Database
 
-```sql
+Buat database MySQL bernama `smartwaste_ai`, lalu import file SQL berikut melalui phpMyAdmin atau terminal:
+
+```text
 database/smartwaste_ai.sql
 ```
 
-Default koneksi database:
+Koneksi default:
 
 ```text
 mysql+pymysql://root:@localhost/smartwaste_ai
@@ -69,13 +102,19 @@ mysql+pymysql://root:@localhost/smartwaste_ai
 
 Jika konfigurasi MySQL berbeda, set environment variable `DATABASE_URL`.
 
+Contoh:
+
+```bash
+set DATABASE_URL=mysql+pymysql://user:password@localhost/smartwaste_ai
+```
+
 ## Menjalankan Aplikasi
 
 ```bash
 python app.py
 ```
 
-Buka:
+Buka aplikasi di browser:
 
 ```text
 http://127.0.0.1:5000
@@ -83,20 +122,26 @@ http://127.0.0.1:5000
 
 ## Akun Default
 
+Administrator:
+
 ```text
-Email: admin@smartwaste.com
-Password: admin123
-Role: admin
+Email    : admin@smartwaste.com
+Password : admin123
+Role     : admin
 ```
 
-Contoh akun petugas dari SQL dummy:
+Petugas:
 
 ```text
-Email: petugas@smartwaste.com
-Password: petugas123
-Role: petugas
+Email    : petugas@smartwaste.com
+Password : petugas123
+Role     : petugas
 ```
 
 ## Catatan AI
 
-File `models/ai_model.h5` masih placeholder. Jika model Keras asli atau TensorFlow belum tersedia, aplikasi tetap berjalan memakai fallback prediksi berdasarkan nama file atau pilihan acak.
+File `models/ai_model.h5` masih berupa placeholder. Jika model Keras asli atau TensorFlow belum tersedia, aplikasi tetap berjalan menggunakan fallback prediksi berdasarkan nama file atau pilihan acak.
+
+## Lisensi
+
+Proyek ini menggunakan lisensi **MIT**. Detail lisensi tersedia pada file [LICENSE](LICENSE).
