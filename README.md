@@ -17,7 +17,13 @@
 
 ## Preview Aplikasi
 
-![SmartWaste AI Application Preview](docs/screenshot-login.png)
+### Halaman Login
+
+![SmartWaste AI Login Page](docs/screenshot-login.png)
+
+### Dashboard Monitoring
+
+![SmartWaste AI Dashboard Monitoring](docs/screenshot-dashboard.png)
 
 ## Tentang Proyek
 
@@ -48,19 +54,19 @@ SmartWaste AI Smart City dirancang sebagai dashboard operasional untuk membantu 
 
 ```text
 SmartWaste_AI/
-├── ai/                         # Modul preprocessing, training, dan prediksi AI
-├── database/                   # File SQL database awal
-├── docs/                       # Aset dokumentasi README
-├── models/                     # Model database dan placeholder model AI
-├── routes/                     # Blueprint Flask
-├── static/                     # CSS, JavaScript, logo, dan gambar
-├── templates/                  # Template halaman aplikasi
-├── app.py                      # Entry point aplikasi Flask
-├── config.py                   # Konfigurasi aplikasi
-├── extensions.py               # Inisialisasi ekstensi Flask
-├── requirements.txt            # Dependency utama
-├── requirements-ai-py310.txt   # Dependency opsional TensorFlow untuk Python 3.10
-└── requirements-vision.txt     # Dependency opsional pemrosesan gambar
+|-- ai/                         # Modul preprocessing, training, dan prediksi AI
+|-- database/                   # File SQL database awal
+|-- docs/                       # Aset dokumentasi README
+|-- models/                     # Model database dan placeholder model AI
+|-- routes/                     # Blueprint Flask
+|-- static/                     # CSS, JavaScript, logo, dan gambar
+|-- templates/                  # Template halaman aplikasi
+|-- app.py                      # Entry point aplikasi Flask
+|-- config.py                   # Konfigurasi aplikasi
+|-- extensions.py               # Inisialisasi ekstensi Flask
+|-- requirements.txt            # Dependency utama
+|-- requirements-ai-py310.txt   # Dependency opsional TensorFlow untuk Python 3.10
+`-- requirements-vision.txt     # Dependency opsional pemrosesan gambar
 ```
 
 ## Instalasi
